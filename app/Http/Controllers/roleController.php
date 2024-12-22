@@ -13,9 +13,13 @@ class roleController extends Controller
 {
     public function role_list()
     {
-        $PermissionRole = permissionRoleModel::getPermission('Role', Auth::user()->role_id);
-        if(empty($PermissionRole)){
-            abort(400);
+        try {
+            $PermissionRole = permissionRoleModel::getPermission('Role', Auth::user()->role_id);
+            if (empty($PermissionRole)) {
+                abort(400, 'Permission denied.');
+            }
+        } catch (\Exception $e) {
+            abort(500, 'An error occurred while checking permission: ' . $e->getMessage());
         }
 
         $data['permissionAdd'] = permissionRoleModel::getPermission('Role Add', Auth::User()->role_id);
@@ -30,10 +34,13 @@ class roleController extends Controller
 
     public function role_add()
     {
-        $PermissionRole = permissionRoleModel::getPermission('Role Add', Auth::User()->role_id);
-        if(empty($PermissionRole)){
-
-            abort(400);
+        try {
+            $PermissionRole = permissionRoleModel::getPermission('Role Add', Auth::user()->role_id);
+            if (empty($PermissionRole)) {
+                abort(400, 'Permission denied.');
+            }
+        } catch (\Exception $e) {
+            abort(500, 'An error occurred while checking permission: ' . $e->getMessage());
         }
 
         $getPermission = permissionModel::getRecord();
