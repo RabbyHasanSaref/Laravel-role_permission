@@ -26,12 +26,16 @@
                    {{$value->name}}
                 </td>
                 <td>
+                    @if(!empty($permissionEdit))
                     <a href="{{url('role_edit', $value->id)}}">
                         <button class="btn btn-info btn-sm">Edit</button>
                     </a>
+                    @endif
+                    @if(!empty($permissionDelete))
                     <a href="{{url('role_delete', $value->id)}}">
                     <button class="btn btn-danger btn-sm">Delete</button>
                     </a>
+                   @endif
                 </td>
             </tr>
                 @endforeach

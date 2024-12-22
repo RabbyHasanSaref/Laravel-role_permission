@@ -21,6 +21,7 @@ class roleController extends Controller
         $data['permissionAdd'] = permissionRoleModel::getPermission('Role Add', Auth::User()->role_id);
         $data['permissionEdit'] = permissionRoleModel::getPermission('Role Edit', Auth::User()->role_id);
         $data['permissionDelete'] = permissionRoleModel::getPermission('Role Delete', Auth::User()->role_id);
+//        dd($data);
 
         $data['getRecord'] = roleModel::getRecord();
 

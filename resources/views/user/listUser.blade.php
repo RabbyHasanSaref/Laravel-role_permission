@@ -5,7 +5,9 @@
 
         <div class="pagetitle d-flex justify-content-between align-items-center">
             <h1>User List</h1>
-            <a href="{{url('/user_add')}}" class="btn btn-primary">Add</a>
+            @if(!empty($permissionAdd))
+            <a href="{{url('user_add')}}" class="btn btn-primary">Add</a>
+            @endif
         </div>
 
         <table class="table table-bordered table-striped">
@@ -32,12 +34,16 @@
                     {{$value->role_name}}
                 </td>
                 <td>
+                    @if(!empty($permissionEdit))
                     <a href="{{url('/user_edit', $value->id)}}">
                         <button class="btn btn-info btn-sm">Edit</button>
                     </a>
+                    @endif
+                    @if(!empty($permissionDelete))
                     <a href="{{url('/user_delete', $value->id)}}">
                     <button class="btn btn-danger btn-sm">Delete</button>
                     </a>
+                    @endif
                 </td>
             </tr>
                 @endforeach

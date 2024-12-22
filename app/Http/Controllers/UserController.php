@@ -2,22 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\permissionRoleModel;
 use App\Models\roleModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 use Hash;
+use Auth;
 
 class UserController extends Controller
 {
     public function user_list()
     {
+        $PermissionRole = permissionRoleModel::getPermission('User', Auth::user()->role_id);
+        if(empty($PermissionRole)){
+            abort(400);
+        }
+
+        $data['permissionAdd'] = permissionRoleModel::getPermission('Add User', Auth::User()->role_id);
+        $data['permissionEdit'] = permissionRoleModel::getPermission('Edit User', Auth::User()->role_id);
+        $data['permissionDelete'] = permissionRoleModel::getPermission('Delete User', Auth::User()->role_id);
+//        dd($data);
         $data['getRecord'] = User::getRecord();
         return view('user.listUser', $data);
     }
 
     public function user_add()
     {
+        $PermissionRole = permissionRoleModel::getPermission('Add User', Auth::user()->role_id);
+        if(empty($PermissionRole)){
+            abort(400);
+        }
+
         $data['getRecord'] = roleModel::getRecord();
         return view('user.addUser', $data);
     }
